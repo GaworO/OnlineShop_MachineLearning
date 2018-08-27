@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body th:fragment="headerShop">
+<a th:href="@{/shopuser/cart}" th:text="${cart}"></a>
+<p id="login"></p>
+</body>
+</html>

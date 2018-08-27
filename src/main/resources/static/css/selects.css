@@ -1,0 +1,17 @@
+#selects {
+    width: 500px;
+    overflow: hidden; 
+}
+#first {
+	text-align: center;
+    width: 200px;
+    height: 72px;
+    float:left; /* add this */
+}
+#second {
+    float: left; /* add this */
+}
+#select1{
+	display: inline-block;
+    vertical-align: middle;
+}

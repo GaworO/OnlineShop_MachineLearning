@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>All orders</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	<div>
+		<a href="/order/add">Add new</a>
+	</div>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Products</th>
+			<th>User</th>
+			<th>Amount</th>
+			<th colspan="2">Options</th>
+		</tr>
+		<tr th:each="order : ${orders}">
+			<td th:text="${order.id}" />
+			<td>
+				<ul th:each="item : ${order.items}">
+					<li><span th:text="${item.name}"></span><span>.
+							Quantity: </span><span th:text="${item.quantity}"></span></li>
+				</ul>
+			</td>
+			<td th:text="${order.user.username}" />
+			<td th:text="${order.amount}" />
+			<td><a th:href="@{/order/edit/(id=${order.id})}">Edit</a></td>
+			<td><a class="delete"
+				th:href="@{/comment/order/(id=${order.id})}">Delete</a></td>
+		</tr>
+	</table>
+</body>
+</html>

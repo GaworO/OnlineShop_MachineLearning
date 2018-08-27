@@ -1,0 +1,71 @@
+package pl.coderslab.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
+
+import org.hibernate.validator.constraints.NotBlank;
+
+@Entity
+@Table(name = "categories")
+public class Category {
+
+	@Id
+	@GeneratedValue
+	private Long id;
+	@NotBlank(message = "Name may not be empty")
+	private String name;
+	@Column(name = "mean")
+	private String  mean ;
+	@Column(name = "cluster")
+	private String  cluster ;
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private List<Product> products = new ArrayList<Product>();
+	public Category() {}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "Category [name=" + name + "]";
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public String getMean() {
+		return mean;
+	}
+
+	public void setMean(String mean) {
+		this.mean = mean;
+	}
+
+	public String getCluster() {
+		return cluster;
+	}
+
+	public void setCluster(String cluster) {
+		this.cluster = cluster;
+	}
+}

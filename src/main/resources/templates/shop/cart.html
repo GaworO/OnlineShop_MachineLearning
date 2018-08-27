@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Your cart</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		function getValues() {
+			var sumAll = $("#sumAll");
+			var sums = $(".sum");
+			var all = 0;
+			sums.each(function(index, element) {
+				var sum = $(this);
+				var val = sum.prev().children().eq(1).val()
+						* sum.prev().prev().text();
+				sum.html(val.toFixed(2));
+				all = all + val;
+			});
+			$("#sumAll").html(all.toFixed(2));
+		}
+		$(document).ready(function() {
+			getValues();
+			$(".input").on('keyup keydown change', function() {
+				getValues();
+			});
+			var send = $("#form");
+			send.on("submit", function(event) {
+				var str = $("#form").serialize()
+			})
+		});
+	</script>
+	<script>
+
+        $(function() {
+            $("#check").click( function()
+                {
+                    alert('button clicked');
+                }
+            );
+        });
+        $(function() {
+            $("#check").click(function () {
+                console.log('I am here');
+                let req = require("request");
+
+                const uri = 'https://ussouthcentral.services.azureml.net/workspaces/a6971f6fdc3e4a5cad2a84c4459f5a1e/services/5f7f26de80024d6fa13d5191a07a7fe6/execute?api-version=2.0&amp;format=swagger';
+                const apiKey = '4ytJZPtM5wbH/iwTnr0eKP+w2BePM6gQRn9O3j/WG6PfJhwRY16Xk1hqDwCwKDTducmednoXoycOZm48egZnCA==';
+
+                let data = {
+                    "Inputs": {
+                        "input1":
+                            [
+                                {
+                                    'column1': "value1",
+                                    'column2': "value2",
+                                    'column3': "value3"
+                                }
+                            ],
+                    },
+                    "GlobalParameters": {}
+                }
+
+                const options = {
+                    uri: uri,
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + apiKey,
+                    },
+                    body: JSON.stringify(data)
+                }
+
+//                req(options, (err, res, body) => {
+//
+//                    if(
+//                !err &amp;&amp;  res.statusCode == 200;
+//            )
+//                {
+//                    console.log(body);
+//                }
+//            else
+//                {
+//                    console.log("The request failed with status code: " + res.statusCode);
+//                }
+//            })
+
+            });
+        })
+
+
+	</script>
+	<h2>Your cart</h2>
+	<a th:href="@{/shopuser/home}" th:text="Back"></a>
+	<h3>Products</h3>
+	<form id="form" action="/shopuser/buy">
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Sum</th>
+				<th>Opinion</th>
+			</tr>
+			<tr th:each="product : ${products}">
+				<td th:text="${product.name}"></td>
+				<td th:text="${product.price}" th:value="${product.price}"></td>
+				<td><input th:value="${product.id}" name="id" hidden="hidden" />
+					<input class="input" type="number" th:value="${product.quantity}"
+					name="quantity" min="1" th:max="${product.amount}"></input></td>
+				<td class="sum"></td>
+				<td><a th:href="@{/shopuser/remove/(id=${product.id})}">Remove
+						from cart</a></td>
+			</tr>
+			<tr>
+				<td colspan="3">Sum all</td>
+				<td id="sumAll"></td>
+				<td><input id="check" type="submit" value="Buy" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
