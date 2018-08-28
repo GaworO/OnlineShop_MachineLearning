@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import javax.transaction.Transactional;
 
 import com.google.gson.Gson;
 import org.hibernate.Hibernate;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +74,7 @@ public class ShopUserController extends SessionedController {
 			elem.setQuantity(0);
 			list.add(elem);
 		}
+
 		model.addAttribute("products", list);
 		return "shop/home";
 	}
@@ -101,19 +104,6 @@ public class ShopUserController extends SessionedController {
 		}
 		model.addAttribute("products", list);
 		return "shop/home";
-	}
-
-	@GetMapping("/addcomment")
-	public String addComment(Model model, @RequestParam(name = "productId") Long id) {
-		if (session().getAttribute("user") == null) {
-			model.addAttribute("msg", "You must be logged in to comment");
-			return "home";
-		}
-
-		User user = (User) session().getAttribute("user");
-		model.addAttribute("productId", id);
-		model.addAttribute("userId", user.getId());
-		return "shop/addComment";
 	}
 
 
@@ -151,16 +141,72 @@ public class ShopUserController extends SessionedController {
 	}
 
 	@GetMapping("/cart")
-	public String cart(Model model) {
+	public String cart(Model model , @ModelAttribute Category category) {
 		UserModel userModel = new UserModel();
 		if (session().getAttribute("userModel") != null) {
 			userModel = (UserModel) session().getAttribute("userModel");
 		} else {
 			userModel.setCart(new Cart());
 		}
+
+		JSONObject obj;
+		org.json.simple.JSONObject inputs;
+		JSONObject global;
+		List<JSONObject> json = new ArrayList<JSONObject>();
+
+		inputs = new JSONObject();
+		global = new JSONObject();
+		obj = new JSONObject();
+		inputs.put("input1" , obj);
+
+		JSONArray names = new JSONArray();
+		names.add( "mean");
+		names.add( "categ_0");
+		names.add( "categ_1");
+		names.add( "categ_2");
+		names.add( "categ_3");
+		names.add( "cluster");
+
+		obj.put( "ColumnNames" , names);
+
+		JSONArray values = new JSONArray();
+		values.add(category.getMean());
+		values.add(userModel.getCart().getProducts());
+		values.add(category.getCluster());
+
+		inputs.put( "ColumnNames" , values);
+
+		JSONArray myArray = new JSONArray();
+		global.put("GlobalParameters" , myArray );
+
+		json.add(inputs);
+		json.add(global);
+
+		Gson gson = new Gson();
+	  gson.toJson(json);
+
+
+		try {
+			FileWriter file = new FileWriter("data.json");
+			file.write(inputs.toJSONString());
+			System.out.print("Sucessfully copied object to JSON ");
+			file.flush();
+			file.close();
+
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+
+		Rest rest = new Rest();
+		rest.readJson("file");
+		rest.readApiInfo("api.txt");
+
+
+
 		model.addAttribute("products", userModel.getCart().getProducts());
 		return "shop/cart";
 	}
+
 
 	@GetMapping("/buy")
 	public String buy(@RequestParam Long[] id, @RequestParam int[] quantity, Model model , @ModelAttribute Category category) {

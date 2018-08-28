@@ -25,7 +25,7 @@
 		</div>
 		<div>
 			<label for="quantity">Quantity</label> <input type="number"
-				th:field="*{quantity}" min="0" />
+				th:field="*{quantity}" />
 			<p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" />
 		</div>
 		<div>

@@ -15,7 +15,7 @@ import javax.validation.constraints.Min;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.Range;
+
 
 @Entity
 @Table(name = "products")
@@ -28,11 +28,9 @@ public class Product {
 	private String name;
 	@Length(max=1000, message = "Description may not be longer than 1000 characters")
 	private String description;
-	@Range(min = 0, max = 5, message = "Evaluation should be in a range of 0-5")
+
 	private double evaluation;
-	@Min(0)
 	private double price;
-	@Min(0)
 	private int quantity = 0;
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Category> categories = new ArrayList<>();
