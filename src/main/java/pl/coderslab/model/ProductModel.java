@@ -5,6 +5,16 @@ public class ProductModel {
 	private String name;
 	private double evaluation;
 	private int quantity;
+	private double sum ;
+
+	public double getSum() {
+		return sum;
+	}
+
+	public void setSum(double sum) {
+		this.sum = sum;
+	}
+
 	private double price;
 	private String[] description;
 	private int amount;

@@ -51,6 +51,10 @@ public class ShopUserController extends SessionedController {
 	private CategoryRepository categoryRepository;
 
 
+	private double sum ;
+	private double quantity ;
+	private double result ;
+
 	@GetMapping({ "/home", "" })
 	public String home(Model model) {
 		UserModel userModel = new UserModel();
@@ -143,11 +147,21 @@ public class ShopUserController extends SessionedController {
 	@GetMapping("/cart")
 	public String cart(Model model , @ModelAttribute Category category) {
 		UserModel userModel = new UserModel();
+		List<Product> products = productRepository.findAll();
 		if (session().getAttribute("userModel") != null) {
 			userModel = (UserModel) session().getAttribute("userModel");
 		} else {
 			userModel.setCart(new Cart());
 		}
+
+		for (Product product : products) {
+			sum += product.get
+			quantity += product.getQuantity();
+		}
+
+		result = sum/quantity;
+
+
 
 		JSONObject obj;
 		org.json.simple.JSONObject inputs;
@@ -157,24 +171,27 @@ public class ShopUserController extends SessionedController {
 		inputs = new JSONObject();
 		global = new JSONObject();
 		obj = new JSONObject();
-		inputs.put("input1" , obj);
+		global.put("Inputs" , (inputs.put("input1", obj)));
+
+
 
 		JSONArray names = new JSONArray();
 		names.add( "mean");
-		names.add( "categ_0");
 		names.add( "categ_1");
 		names.add( "categ_2");
 		names.add( "categ_3");
 		names.add( "cluster");
+		names.add( "categ_0");
 
-		obj.put( "ColumnNames" , names);
+		obj.put("ColumnNames", names);
+
 
 		JSONArray values = new JSONArray();
-		values.add(category.getMean());
+		values.add(category.setMean(result));
 		values.add(userModel.getCart().getProducts());
 		values.add(category.getCluster());
 
-		inputs.put( "ColumnNames" , values);
+		obj.put("Values", values);
 
 		JSONArray myArray = new JSONArray();
 		global.put("GlobalParameters" , myArray );
@@ -182,9 +199,8 @@ public class ShopUserController extends SessionedController {
 		json.add(inputs);
 		json.add(global);
 
-		Gson gson = new Gson();
-	  gson.toJson(json);
-
+//		Gson gson = new Gson();
+//	  gson.toJson(json);
 
 		try {
 			FileWriter file = new FileWriter("data.json");
@@ -198,14 +214,16 @@ public class ShopUserController extends SessionedController {
 		}
 
 		Rest rest = new Rest();
-		rest.readJson("file");
-		rest.readApiInfo("api.txt");
+		rest.readJson("data.json");
+		rest.readApiInfo("C:/Users/Ola/Desktop/MediaShop-master/src/main/resources/api.txt");
 
 
 
 		model.addAttribute("products", userModel.getCart().getProducts());
+		System.out.println("finished");
 		return "shop/cart";
 	}
+
 
 
 	@GetMapping("/buy")
@@ -227,42 +245,6 @@ public class ShopUserController extends SessionedController {
 				order.increaseAmount(product.getPrice() * quantity[i]);
 				orderRepository.save(order);
 
-				JSONObject obj;
-				JSONObject inputs;
-				JSONObject global;
-				List<JSONObject> json = new ArrayList<JSONObject>();
-
-				inputs = new JSONObject();
-				global = new JSONObject();
-				obj = new JSONObject();
-				inputs.put("input1", obj);
-
-				JSONArray names = new JSONArray();
-				names.add("mean");
-				names.add("categ_0");
-				names.add("categ_1");
-				names.add("categ_2");
-				names.add("categ_3");
-				names.add("cluster");
-
-				obj.put("ColumnNames", names);
-
-
-				JSONArray values = new JSONArray();
-				values.add(category.getMean());
-				values.add(categoryRepository.findAll());
-
-
-				inputs.put("ColumnNames", values);
-
-				JSONArray myArray = new JSONArray();
-				global.put("GlobalParameters", myArray);
-
-				json.add(inputs);
-				json.add(global);
-
-				Gson gson = new Gson();
-				return gson.toJson(json);
 			}
 			UserModel userModel = (UserModel) session().getAttribute("userModel");
 			userModel.setCart(new Cart());

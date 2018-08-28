@@ -17,7 +17,7 @@ public class Category {
 	@NotBlank(message = "Name may not be empty")
 	private String name;
 	@Column(name = "mean")
-	private String  mean ;
+	private double  mean ;
 	@Column(name = "cluster")
 	private String  cluster ;
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -53,12 +53,12 @@ public class Category {
 		this.products = products;
 	}
 
-	public String getMean() {
+	public double getMean() {
 		return mean;
 	}
 
-	public void setMean(String mean) {
-		this.mean = mean;
+	public double setMean(double mean) {
+		return this.mean = mean;
 	}
 
 	public String getCluster() {

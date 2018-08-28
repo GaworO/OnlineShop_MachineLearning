@@ -27,6 +27,7 @@ public class Order {
 	@ManyToOne
 	private User user;
 	private double amount;
+	private double sum ;
 	public Order() {}
 	
 	public double getAmount() {
@@ -63,8 +64,12 @@ public class Order {
 	public void setItems(List<OrderedItem> items) {
 		this.items = items;
 	}
-	
-	
-	
-	
+
+	public double getSum() {
+		return sum;
+	}
+
+	public void setSum(double sum) {
+		this.sum = sum;
+	}
 }
