@@ -8,6 +8,16 @@ public class UserModel {
 	private String username;
 	private String password;
 	private String email;
+	private int amount;
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
 	public UserModel() {}
 	public User getUser() {
 		return user;

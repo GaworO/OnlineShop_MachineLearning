@@ -155,11 +155,12 @@ public class ShopUserController extends SessionedController {
 		}
 
 		for (Product product : products) {
-			sum += product.get
+			sum += product.getPrice();
 			quantity += product.getQuantity();
 		}
 
 		result = sum/quantity;
+		System.out.print(result);
 
 
 
@@ -188,7 +189,7 @@ public class ShopUserController extends SessionedController {
 
 		JSONArray values = new JSONArray();
 		values.add(category.setMean(result));
-		values.add(userModel.getCart().getProducts());
+		values.add(productModel.getAmount());
 		values.add(category.getCluster());
 
 		obj.put("Values", values);

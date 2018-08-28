@@ -1,1 +1,1 @@
-{"input1":{"ColumnNames":["mean","categ_1","categ_2","categ_3","cluster","categ_0"],"Values":[-25.0,[ProductModel [id=1, quantity=1, price=20.0]],null]}}
+{"input1":{"ColumnNames":["mean","categ_1","categ_2","categ_3","cluster","categ_0"],"Values":[-16.666666666666668,0,null]}}
