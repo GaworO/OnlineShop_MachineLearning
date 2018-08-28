@@ -226,6 +226,24 @@ public class ShopUserController extends SessionedController {
 	}
 
 
+//	https://stackoverflow.com/questions/10604507/pca-implementation-in-java
+//	//create points in a double array
+//	double[][] pointsArray = new double[][] {
+//					new double[] { -1.0, -1.0 },
+//					new double[] { -1.0, 1.0 },
+//					new double[] { 1.0, 1.0 } };
+//
+//	//create real matrix
+//	RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
+//
+////create covariance matrix of points, then find eigen vectors
+////see https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues
+//
+//	Covariance covariance = new Covariance(realMatrix);
+//	RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
+//	EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
+
+
 
 	@GetMapping("/buy")
 	public String buy(@RequestParam Long[] id, @RequestParam int[] quantity, Model model , @ModelAttribute Category category) {
