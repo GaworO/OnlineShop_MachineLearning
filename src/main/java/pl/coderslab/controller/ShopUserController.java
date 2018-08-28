@@ -189,7 +189,7 @@ public class ShopUserController extends SessionedController {
 
 		JSONArray values = new JSONArray();
 		values.add(category.setMean(result));
-		values.add(productModel.getAmount());
+		values.add(userModel.getAmount());
 		values.add(category.getCluster());
 
 		obj.put("Values", values);
@@ -216,7 +216,7 @@ public class ShopUserController extends SessionedController {
 
 		Rest rest = new Rest();
 		rest.readJson("data.json");
-		rest.readApiInfo("C:/Users/Ola/Desktop/MediaShop-master/src/main/resources/api.txt");
+		rest.readApiInfo("C:\\Users\\Ola\\Desktop\\MediaShop-master\\api.txt");
 
 
 
