@@ -24,19 +24,19 @@ package pl.coderslab.controller;
  */
 public class Rest {
   // public static JSONObject inpParms;
-  public static String apikey;
-  public static String apiurl;
+  public static final String apikey = "4ytJZPtM5wbH/iwTnr0eKP+w2BePM6gQRn9O3j/WG6PfJhwRY16Xk1hqDwCwKDTducmednoXoycOZm48egZnCA==";
   public static String jsonBody;
+  public static final String URL = "https://ussouthcentral.services.azureml.net/workspaces/a6971f6fdc3e4a5cad2a84c4459f5a1e/services/5f7f26de80024d6fa13d5191a07a7fe6/execute?api-version=2.0&details=true";
+
 
   /**
    * Read the JSON schema from the file rrsJson.json
    *
    * @param filename It expects a fully qualified file name that contains input JSON file
    */
-  public static void readJson(String filename) {
+  public static void readJson(InputStream inputStream) {
     try {
-      File apiFile = new File(filename);
-      Scanner sc = new Scanner(apiFile);
+      Scanner sc = new Scanner(inputStream);
       jsonBody = "";
       while (sc.hasNext()) {
         jsonBody += sc.nextLine()+"\n";
@@ -52,14 +52,13 @@ public class Rest {
    *
    * @param filename fully qualified file name that contains API key and API URL
    */
-  public static void readApiInfo(String filename) {
+  public static void readApiInfo(InputStream inputStream) {
 
     try {
-      File apiFile = new File(filename);
-      Scanner sc = new Scanner(apiFile);
+       Scanner sc = new Scanner(inputStream);
 
-      apiurl = sc.nextLine();
-      apikey = sc.nextLine();
+       sc.nextLine();
+//      apikey = sc.nextLine();
 
     }
     catch (Exception e){
@@ -72,7 +71,7 @@ public class Rest {
    * Call REST API for retrieving prediction from Azure ML
    * @return response from the REST API
    */
-  public static String rrsHttpPost() {
+  public  String rrsHttpPost(String jsonBody) {
 
     HttpPost post;
     HttpClient client;
@@ -80,7 +79,7 @@ public class Rest {
 
     try {
       // create HttpPost and HttpClient object
-      post = new HttpPost(apiurl);
+      post = new HttpPost(URL);
       client = HttpClientBuilder.create().build();
 
       // setup output message by copying JSON body into
@@ -109,38 +108,4 @@ public class Rest {
     }
 
   }
-
-  /**
-   * @param args the command line arguments specifying JSON and API info file names
-   */
-  public static void main(String[] args) {
-    // check for mandatory argments. This program expects 2 arguments
-    // first argument is full path with file name of JSON file and
-    // second argument is full path with file name of API file that contains API URL and API Key of request response REST API
-    if (args.length < 2) {
-      System.out.println("Incorrect usage. Please use the following calling pattern");
-      System.out.println("java AzureML_RRSApp <jsonFilename> <apiInfoFilename>");
-    }
-
-    try {
-
-      // read JSON file name
-      String jsonFile = args[0];
-      // read API file name
-      String apiFile = args[1];
-
-      // call method to read API URL and key from API file
-      readApiInfo(apiFile);
-
-      // call method to read JSON input from the JSON file
-      readJson(jsonFile);
-
-      // print the response from REST API
-      System.out.println(rrsHttpPost());
-    }
-    catch (Exception e) {
-      System.out.println(e.toString());
-    }
-  }
-
 }

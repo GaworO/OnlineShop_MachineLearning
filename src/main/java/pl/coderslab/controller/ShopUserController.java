@@ -4,12 +4,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.transaction.Transactional;
+//import org.apache.commons.math3.linear;
+//import javax.transaction.Transactional;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ import pl.coderslab.repository.OrderRepository;
 import pl.coderslab.repository.OrderedItemRepository;
 import pl.coderslab.repository.ProductRepository;
 import pl.coderslab.repository.UserRepository;
+
+import javax.transaction.Transactional;
 
 @Controller
 @RequestMapping("/shopuser")
@@ -153,10 +156,9 @@ public class ShopUserController extends SessionedController {
 			userModel.setCart(new Cart());
 		}
 
-
 		sum = userModel.getCart().getSumPrice();
 		quantity = userModel.getCart().getQuantity();
-  	result = sum/quantity;
+		result = sum / quantity;
 
 		category0 = userModel.getCart().getPriceCatgory1();
 		category1 = userModel.getCart().getPriceCatgory1();
@@ -166,22 +168,24 @@ public class ShopUserController extends SessionedController {
 		JSONObject obj;
 		org.json.simple.JSONObject inputs;
 		JSONObject global;
+		JSONObject finale;
 		List<JSONObject> json = new ArrayList<JSONObject>();
 
 		inputs = new JSONObject();
 		global = new JSONObject();
 		obj = new JSONObject();
-		global.put("Inputs" , (inputs.put("input1", obj)));
+		finale = new JSONObject();
 
+		global.put("Inputs", inputs);
 
-
+		inputs.put("input1", obj);
 		JSONArray names = new JSONArray();
-		names.add( "mean");
-		names.add( "categ_0");
-		names.add( "categ_1");
-		names.add( "categ_2");
-		names.add( "categ_3");
-		names.add( "cluster");
+		names.add("mean");
+		names.add("categ_0");
+		names.add("categ_1");
+		names.add("categ_2");
+		names.add("categ_3");
+		names.add("cluster");
 
 
 		obj.put("ColumnNames", names);
@@ -190,78 +194,73 @@ public class ShopUserController extends SessionedController {
 		JSONArray values = new JSONArray();
 		values.add(category.setMean(result));
 		values.add(category0);
-    values.add(category1);
+		values.add(category1);
 		values.add(category2);
 		values.add(category3);
-		values.add(category.getCluster());
+		values.add(4);
 
 		obj.put("Values", values);
 
-		JSONArray myArray = new JSONArray();
-		obj.put("GlobalParameters" , myArray );
+		JSONObject myArray = new JSONObject();
+		global.put("GlobalParameters", myArray);
 
+		json.add(obj);
 		json.add(inputs);
-		json.add(global);
 
-//		Gson gson = new Gson();
-//	  gson.toJson(json);
 
 		try {
 			FileWriter file = new FileWriter("data.json");
-			file.write(inputs.toJSONString());
+			file.write(global.toJSONString());
 			System.out.print("Sucessfully copied object to JSON ");
 			file.flush();
 			file.close();
 
-		} catch (IOException e){
+
+		} catch (IOException e) {
 			e.printStackTrace();
+
+		}
+			Rest r = new Rest();
+			String response = r.rrsHttpPost(finale.toJSONString());
+			System.out.println("_____________________________________________________________________");
+			System.out.println(response);
+
+
+			model.addAttribute("products", userModel.getCart().getProducts());
+			return "shop/cart";
 		}
 
 
-		model.addAttribute("products", userModel.getCart().getProducts());
-
-//		Rest.readJson("C:\\\\Users\\\\Ola\\\\Desktop\\\\MediaShop-master\\\\src\\\\main\\\\resources\\\\data.json");
-//		File file = new File("C:/Users/Ola/Desktop/MediaShop-master/src/main/resources/api.txt").getAbsolutePath();
 
 
-//		Rest.readApiInfo("C:\\\\Users\\\\Ola\\\\Desktop\\\\MediaShop-master\\\\src\\\\main\\\\resources\\\\api.txt");
-//
-//		String[] myarray = {"data.json" , zdanie };
-//		Rest.main(myarray);
-		return "shop/cart";
-	}
 
 
-//	public void PCA(){
+
+
+
+
+
+//	public double PCA(){
+//			//create points in a double array
+//			double[][] pointsArray = new double[][] {
+//							new double[] { category0 , category1 , category2 , category3 },
+//							new double[] { category1 , category2 , category3 ,  category0 },
+//							new double[] { category2 , category3 ,  category0,category1},
+//							new double[] { category3 ,  category0,category1 ,category2},};
 //
-//	SparkC conf = new SparkConf().setAppName("PCAExample").setMaster("local");
-//		try (JavaSparkContext sc = new JavaSparkContext(conf)) {
-//			//Create points as Spark Vectors
-//			List<Vector> vectors = Arrays.asList(
-//							Vectors.dense( category0 , category1 , category2 , category3),
-//							Vectors.dense(category1 , category2 , category3 ,  category0),
-//							Vectors.dense(category2 , category3 ,  category0,category1),
-//							Vectors.dense(category3 ,  category0,category1 ,category2));
+////create real matrix
+//			RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
 //
+////create covariance matrix of points, then find eigen vectors
+////see https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues
 //
-//			//Create Spark MLLib RDD
-//			JavaRDD<Vector> distData = sc.parallelize(vectors);
-//			RDD<Vector> vectorRDD = distData.rdd();
+//			Covariance covariance = new Covariance(realMatrix);
+//			RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
+//			EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
 //
-//			//Execute PCA Projection to 2 dimensions
-//			PCA pca = new PCA(2);
-//			PCAModel pcaModel = pca.fit(vectorRDD);
-//			Matrix matrix = pcaModel.pc();
-//
-//			int number = matrix;
-//
-//		}
-//		return number ;
-//
+//       return ed ;
 //	}
-
-
-
+//
 	@GetMapping("/buy")
 	public String buy(@RequestParam Long[] id, @RequestParam int[] quantity, Model model , @ModelAttribute Category category) {
 		if (session().getAttribute("user") != null) {
