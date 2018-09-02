@@ -60,7 +60,7 @@ public class Cart implements Serializable {
 		return sum;
 	}
 
-	public double getPriceCatgory1() {
+	public double getPriceCatgory0() {
 
 		for (int i = 0; i <= products.size(); i++) {
 			priceCategory = products.get(0).getPrice();
@@ -70,7 +70,7 @@ public class Cart implements Serializable {
 		return first;
 	}
 
-	public double getPriceCatgory2() {
+	public double getPriceCatgory1() {
 
 		for (int i = 0; i <= products.size(); i++) {
 			priceCategory = products.get(1).getPrice();
@@ -80,7 +80,7 @@ public class Cart implements Serializable {
 		return first;
 	}
 
-	public double getPriceCatgory3() {
+	public double getPriceCatgory2() {
 
 		for (int i = 0; i <= products.size(); i++) {
 			priceCategory = products.get(2).getPrice();
@@ -90,11 +90,21 @@ public class Cart implements Serializable {
 		return first;
 	}
 
-	public double getPriceCatgory4() {
+	public double getPriceCatgory3() {
 
 		for (int i = 0; i <= products.size(); i++) {
 			priceCategory = products.get(3).getPrice();
 			quantityCategory = products.get(3).getQuantity();
+			first = priceCategory * quantityCategory;
+		}
+		return first;
+	}
+
+	public double getPriceCatgory4() {
+
+		for (int i = 0; i <= products.size(); i++) {
+			priceCategory = products.get(4).getPrice();
+			quantityCategory = products.get(4).getQuantity();
 			first = priceCategory * quantityCategory;
 		}
 		return first;

@@ -20,7 +20,7 @@ public class Category implements Serializable {
 	@Column(name = "mean")
 	private double  mean ;
 	@Column(name = "cluster")
-	private String  cluster ;
+	private double  cluster ;
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private List<Product> products = new ArrayList<Product>();
 	public Category() {}
@@ -62,11 +62,11 @@ public class Category implements Serializable {
 		return this.mean = mean;
 	}
 
-	public String getCluster() {
+	public double getCluster() {
 		return cluster;
 	}
 
-	public void setCluster(String cluster) {
-		this.cluster = cluster;
+	public double setCluster(double cluster) {
+		return this.cluster = cluster;
 	}
 }

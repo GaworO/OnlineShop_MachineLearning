@@ -7,6 +7,10 @@ import java.util.List;
 //import org.apache.commons.math3.linear;
 //import javax.transaction.Transactional;
 
+import org.apache.commons.math3.linear.EigenDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.correlation.Covariance;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +58,7 @@ public class ShopUserController extends SessionedController {
 	private double category1 ;
 	private double category2 ;
 	private double category3 ;
+	private double category4 ;
 
 
 
@@ -155,15 +160,35 @@ public class ShopUserController extends SessionedController {
 		} else {
 			userModel.setCart(new Cart());
 		}
+		category0 = userModel.getCart().getPriceCatgory1();
+		category1 = userModel.getCart().getPriceCatgory1();
+		category2 = userModel.getCart().getPriceCatgory2();
+		category3 = userModel.getCart().getPriceCatgory3();
+		category4 = userModel.getCart().getPriceCatgory4();
+
+
+		double[][] pointsArray = new double[][] {
+						new double[] { category0 , category1 , category2 , category3 , category4},
+						new double[] { category1 , category2 , category3 ,  category4, category0 },
+						new double[] { category2 , category3 , category4, category0,category1},
+						new double[] { category3 ,  category4, category0,category1 ,category2},
+						new double[] { category4, category0,category1 ,category2,category4},};
+		RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
+		Covariance covariance = new Covariance(realMatrix);
+		RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
+		EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
+
+		double deteminant = ed.getDeterminant();
+		System.out.println("____________________________-");
+     System.out.println(deteminant);
+
+
+
 
 		sum = userModel.getCart().getSumPrice();
 		quantity = userModel.getCart().getQuantity();
 		result = sum / quantity;
 
-		category0 = userModel.getCart().getPriceCatgory1();
-		category1 = userModel.getCart().getPriceCatgory1();
-		category2 = userModel.getCart().getPriceCatgory2();
-		category3 = userModel.getCart().getPriceCatgory3();
 
 		JSONObject obj;
 		org.json.simple.JSONObject inputs;
@@ -185,6 +210,7 @@ public class ShopUserController extends SessionedController {
 		names.add("categ_1");
 		names.add("categ_2");
 		names.add("categ_3");
+		names.add("categ_4");
 		names.add("cluster");
 
 
@@ -197,7 +223,8 @@ public class ShopUserController extends SessionedController {
 		values.add(category1);
 		values.add(category2);
 		values.add(category3);
-		values.add(4);
+		values.add(category4);
+		values.add(category.setCluster(deteminant));
 
 		obj.put("Values", values);
 
@@ -215,7 +242,6 @@ public class ShopUserController extends SessionedController {
 			file.flush();
 			file.close();
 
-
 		} catch (IOException e) {
 			e.printStackTrace();
 
@@ -230,37 +256,6 @@ public class ShopUserController extends SessionedController {
 			return "shop/cart";
 		}
 
-
-
-
-
-
-
-
-
-
-
-//	public double PCA(){
-//			//create points in a double array
-//			double[][] pointsArray = new double[][] {
-//							new double[] { category0 , category1 , category2 , category3 },
-//							new double[] { category1 , category2 , category3 ,  category0 },
-//							new double[] { category2 , category3 ,  category0,category1},
-//							new double[] { category3 ,  category0,category1 ,category2},};
-//
-////create real matrix
-//			RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
-//
-////create covariance matrix of points, then find eigen vectors
-////see https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues
-//
-//			Covariance covariance = new Covariance(realMatrix);
-//			RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
-//			EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
-//
-//       return ed ;
-//	}
-//
 	@GetMapping("/buy")
 	public String buy(@RequestParam Long[] id, @RequestParam int[] quantity, Model model , @ModelAttribute Category category) {
 		if (session().getAttribute("user") != null) {
