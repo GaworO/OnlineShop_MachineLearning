@@ -25,11 +25,6 @@
 				th:field="*{price}" />
 			<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" />
 		</div>
-		<div>
-			<label for="quantity">Quantity</label> <input type="number"
-				th:field="*{quantity}" />
-			<p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" />
-		</div>
 		<label for="category">Category</label>
 		<div id="selects">
 			<div id="first">
