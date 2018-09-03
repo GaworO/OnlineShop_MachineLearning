@@ -3,13 +3,15 @@ package pl.coderslab.controller;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 //import org.apache.commons.math3.linear;
 //import javax.transaction.Transactional;
-
+import static java.lang.Math.*;
 import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.optimization.BaseMultivariateVectorMultiStartOptimizer;
 import org.apache.commons.math3.stat.correlation.Covariance;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -32,6 +34,7 @@ import pl.coderslab.repository.OrderRepository;
 import pl.coderslab.repository.OrderedItemRepository;
 import pl.coderslab.repository.ProductRepository;
 import pl.coderslab.repository.UserRepository;
+import scala.collection.immutable.Vector;
 
 import javax.transaction.Transactional;
 
@@ -160,7 +163,7 @@ public class ShopUserController extends SessionedController {
 		} else {
 			userModel.setCart(new Cart());
 		}
-		category0 = userModel.getCart().getPriceCatgory1();
+		category0 = userModel.getCart().getPriceCatgory0();
 		category1 = userModel.getCart().getPriceCatgory1();
 		category2 = userModel.getCart().getPriceCatgory2();
 		category3 = userModel.getCart().getPriceCatgory3();
@@ -172,18 +175,19 @@ public class ShopUserController extends SessionedController {
 						new double[] { category1 , category2 , category3 ,  category4, category0 },
 						new double[] { category2 , category3 , category4, category0,category1},
 						new double[] { category3 ,  category4, category0,category1 ,category2},
-						new double[] { category4, category0,category1 ,category2,category4},};
+						new double[] { category4, category0,category1 ,category2,category3},};
+
+
 		RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
 		Covariance covariance = new Covariance(realMatrix);
+
 		RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
 		EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
 
-		double deteminant = ed.getDeterminant();
+		double deteminant = (double) ed.getDeterminant();
 		System.out.println("____________________________-");
      System.out.println(deteminant);
-
-
-
+    double determinantRount = Math.round(deteminant);
 
 		sum = userModel.getCart().getSumPrice();
 		quantity = userModel.getCart().getQuantity();
@@ -194,16 +198,15 @@ public class ShopUserController extends SessionedController {
 		org.json.simple.JSONObject inputs;
 		JSONObject global;
 		JSONObject finale;
-		List<JSONObject> json = new ArrayList<JSONObject>();
 
 		inputs = new JSONObject();
 		global = new JSONObject();
 		obj = new JSONObject();
 		finale = new JSONObject();
-
 		global.put("Inputs", inputs);
-
 		inputs.put("input1", obj);
+
+
 		JSONArray names = new JSONArray();
 		names.add("mean");
 		names.add("categ_0");
@@ -217,23 +220,24 @@ public class ShopUserController extends SessionedController {
 		obj.put("ColumnNames", names);
 
 
+		JSONArray values1 = new JSONArray();
+		values1.add(category.setMean(result));
+		values1.add(category0);
+		values1.add(category1);
+		values1.add(category2);
+		values1.add(category3);
+		values1.add(category4);
+		values1.add(determinantRount);
+
+
 		JSONArray values = new JSONArray();
-		values.add(category.setMean(result));
-		values.add(category0);
-		values.add(category1);
-		values.add(category2);
-		values.add(category3);
-		values.add(category4);
-		values.add(category.setCluster(deteminant));
+		values.add(values1);
+
 
 		obj.put("Values", values);
 
-		JSONObject myArray = new JSONObject();
-		global.put("GlobalParameters", myArray);
-
-		json.add(obj);
-		json.add(inputs);
-
+		JSONObject jsonObject = new JSONObject();
+		global.put("GlobalParameters", jsonObject);
 
 		try {
 			FileWriter file = new FileWriter("data.json");
@@ -247,7 +251,7 @@ public class ShopUserController extends SessionedController {
 
 		}
 			Rest r = new Rest();
-			String response = r.rrsHttpPost(finale.toJSONString());
+			String response = r.rrsHttpPost(global.toJSONString());
 			System.out.println("_____________________________________________________________________");
 			System.out.println(response);
 

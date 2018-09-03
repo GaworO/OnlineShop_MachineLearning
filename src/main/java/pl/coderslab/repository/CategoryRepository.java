@@ -6,5 +6,4 @@ import pl.coderslab.entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 	Category findById(Long id);
-	Category findByProducts(String name) ;
 }
