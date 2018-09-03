@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title>Your cart</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../static/css/style.css" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8"/>
+    <title>Your cart</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="icon" th:href="@{/vendor/img//core-img/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css}"/>
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" th:href="@{/vendor/css/core-style.css}"/>
 </head>
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-		function getValues() {
-			var sumAll = $("#sumAll");
-			var sums = $(".sum");
-			var all = 0;
-			sums.each(function(index, element) {
-				var sum = $(this);
-				var val = sum.prev().children().eq(1).val()
-						* sum.prev().prev().text();
-				sum.html(val.toFixed(2));
-				all = all + val;
-			});
-			$("#sumAll").html(all.toFixed(2));
-		}
-		$(document).ready(function() {
-			getValues();
-			$(".input").on('keyup keydown change', function() {
-				getValues();
-			});
-			var send = $("#form");
-			send.on("submit", function(event) {
-				var str = $("#form").serialize()
-			})
-		});
-	</script>
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    function getValues() {
+        var sumAll = $("#sumAll");
+        var sums = $(".sum");
+        var all = 0;
+        sums.each(function (index, element) {
+            var sum = $(this);
+            var val = sum.prev().children().eq(1).val()
+                * sum.prev().prev().text();
+            sum.html(val.toFixed(2));
+            all = all + val;
+        });
+        $("#sumAll").html(all.toFixed(2));
+    }
 
-	<h2>Your cart</h2>
-	<a th:href="@{/shopuser/home}" th:text="Back"></a>
-	<h3>Products</h3>
-	<form id="form" action="/shopuser/buy">
-		<table>
-			<tr>
-				<th>Name</th>
-				<th>Price</th>
-				<th>Quantity</th>
-				<th>Sum</th>
-				<th>Opinion</th>
-			</tr>
-			<tr th:each="product : ${products}">
-				<td th:text="${product.name}"></td>
-				<td th:text="${product.price}" th:value="${product.price}"></td>
-				<td><input th:value="${product.id}" name="id" hidden="hidden" />
-					<input class="input" type="number" th:value="${product.quantity}"
-					name="quantity" ></input></td>
-				<td class="sum"></td>
-				<td><a th:href="@{/shopuser/remove/(id=${product.id})}">Remove
-						from cart</a></td>
-			</tr>
-			<tr>
-				<td colspan="3">Sum all</td>
-				<td id="sumAll"></td>
-				<td><input id="check" type="submit" value="Buy" /></td>
-			</tr>
-		</table>
-	</form>
+    $(document).ready(function () {
+        getValues();
+        $(".input").on('keyup keydown change', function () {
+            getValues();
+        });
+        var send = $("#form");
+        send.on("submit", function (event) {
+            var str = $("#form").serialize()
+        })
+    });
+</script>
+
+<h2>Your cart</h2>
+<button type="button" class="btn btn-warning"><a th:href="@{/shopuser/home}">Back </a></button>
+<div class="container">
+    <div class="row col-md-6 col-md-offset-2 custyle">
+
+
+        <form id="form" action="/shopuser/buy">
+            <table class="table table-striped custab">
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Sum</th>
+                    <th>Remove</th>
+                </tr>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.price}" th:value="${product.price}"></td>
+                    <td><input th:value="${product.id}" name="id" hidden="hidden"/>
+                        <input class="input" type="number" th:value="${product.quantity}"
+                               name="quantity"></input></td>
+                    <td class="sum"></td>
+                    <td><a th:href="@{/shopuser/remove/(id=${product.id})}" class="btn btn-danger btn-xs"><span
+                            class="glyphicon glyphicon-remove"></span>Remove</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Sum all</td>
+                    <td id="sumAll"></td>
+                    <td><input id="check" class="btn btn-success" type="submit" value="Buy"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

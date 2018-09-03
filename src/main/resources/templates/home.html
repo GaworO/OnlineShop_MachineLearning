@@ -1,14 +1,214 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<title>Home</title>
+	<meta charset="UTF-8"/>
+	<meta name="description" content=""/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<!-- Title  -->
+	<title>Alex  Magisterka | Home</title>
+
+	<!-- Favicon  -->
+	<link rel="icon" th:href="@{/vendor/img//core-img/favicon.ico}"/>
+
+	<!-- Core Style CSS -->
+	<link rel="stylesheet" th:href="@{/vendor/css/core-style.css}"/>
+	<link rel="stylesheet" th:href="@{/vendor/style.css}"/>
+
 </head>
+
 <body>
-	<h1>Hello home</h1>
-	<a href="/shopuser/home">Shop</a>
-	<a href="/register">Register</a>
-	<a href="/login">Login</a>
-	<h2 th:text="${msg}"></h2>
+<!-- Search Wrapper Area Start -->
+<div class="search-wrapper section-padding-100">
+	<div class="search-close">
+		<i class="fa fa-close" aria-hidden="true"></i>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="search-content">
+					<form action="#" method="get">
+						<input type="search" name="search" id="search" placeholder="Type your keyword..."/>
+						<button type="submit"><img th:attr="src=@{/vendor/img/core-img/search.png}" alt=""></img></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Search Wrapper Area End -->
+
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+
+	<!-- Mobile Nav (max width 767px)-->
+	<div class="mobile-nav">
+		<!-- Navbar Brand -->
+		<div class="amado-navbar-brand">
+			<a href="index.html"><img th:attr="src=@{/vendor/img/core-img/cart.png}" alt=""/></a>
+		</div>
+		<!-- Navbar Toggler -->
+		<div class="amado-navbar-toggler">
+			<span></span><span></span><span></span>
+		</div>
+	</div>
+
+	<!-- Header Area Start -->
+	<header class="header-area clearfix">
+		<!-- Close Icon -->
+		<div class="nav-close">
+			<i class="fa fa-close" aria-hidden="true"></i>
+		</div>
+		<!-- Logo -->
+		<div class="logo">
+			<a href="index.html"><font size ="6">AMAZING</font> <font size = "4">NOTEBOOKS</font></a>
+		</div>
+		<!-- Amado Nav -->
+		<nav class="amado-nav">
+			<ul>
+				<li class="active"><a th:href="@{/}">Home</a></li>
+				<li><a th:href="@{/shopuser/home}" >Shop</a></li>
+				<li><a  th:href="@{/register}">Register</a></li>
+			</ul>
+		</nav>
+	</header>
+	<!-- Header Area End -->
+
+	<!-- Product Catagories Area Start -->
+	<div class="products-catagories-area clearfix">
+		<div class="amado-pro-catagory clearfix">
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/pinknotebook.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $20</p>
+						<h4>Back to School</h4>
+					</div>
+				</a>
+			</div>
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/notebook15.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $1</p>
+						<h4>Hello Sunshine</h4>
+					</div>
+				</a>
+			</div>
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/greennotebook2.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $180</p>
+						<h4>The dreamer</h4>
+					</div>
+				</a>
+			</div>
+
+
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/notebook21.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $18</p>
+						<h4>Pastel Love</h4>
+					</div>
+				</a>
+			</div>
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/notebook17.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $320</p>
+						<h4>Blue blue ocean</h4>
+					</div>
+				</a>
+			</div>
+
+
+			<!-- Single Catagory -->
+			<div class="single-products-catagory clearfix">
+				<a href="shop.html">
+					<img th:attr="src=@{/vendor/img/bg-img/notebook22.jpg}" alt=""/>
+					<!-- Hover Content -->
+					<div class="hover-content">
+						<div class="line"></div>
+						<p>From $318</p>
+						<h4>Princess Diary</h4>
+					</div>
+				</a>
+			</div>
+
+		</div>
+	</div>
+	<!-- Product Catagories Area End -->
+</div>
+<!-- ##### Footer Area Start ##### -->
+<footer class="footer_area clearfix">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-12 col-lg-8">
+				<div class="single_widget_area">
+					<!-- Footer Menu -->
+					<div class="footer_menu">
+						<nav class="navbar navbar-expand-lg justify-content-end">
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+							<div class="collapse navbar-collapse" id="footerNavContent">
+								<ul class="navbar-nav ml-auto">
+									<li class="nav-item active">
+										<a class="nav-link" th:href="@{/}">Home</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link"  th:href="@{/shopuser/home}">Shop</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" th:href="@{/register}">Register</a>
+									</li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- ##### Footer Area End ##### -->
+
+<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+<script th:attr="src=@{/vendor/js/jquery/jquery-2.2.4.min.js}"></script>
+<!-- Popper js -->
+<script th:attr="src=@{/vendorjs/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:attr="src=@{/vendor/js/bootstrap.min.js}"></script>
+<!-- Plugins js -->
+<script th:attr="src=@{/vendor/js/plugins.js}"></script>
+<!-- Active js -->
+<script th:attr="src=@{/vendor/js/active.js}"></script>
+
 </body>
+
 </html>

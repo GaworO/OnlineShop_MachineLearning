@@ -1,67 +1,137 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<title>MediaShop</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="../static/css/style.css" th:href="@{/css/style.css}" />
-	<link rel="stylesheet" type="text/css" media="all"
-	href="../static/css/category.css" th:href="@{/css/category.css}" />
+    <meta charset="UTF-8"/>
+    <meta name="description" content=""/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>Amazing Notebooks| Shop</title>
+
+    <link rel="icon" th:href="@{/vendor/img//core-img/favicon.ico}"/>
+
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" th:href="@{/vendor/css/core-style.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/style.css}"/>
+
+
 </head>
+
 <body>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function(event) {
-			$(document).ready(function() {
-				$.ajax({
-					type : 'get',
-					url : "/shopuser/login",
-					dataType : "html",
-					success : function(data) {
-						$("#login").html(data);
-					},
-					error : function() {
-					}
-				});
-			});
-		});
-	</script>
-	<div th:replace="shop/headerShop :: headerShop"></div>
-	<div th:replace="shop/headerCategory :: headerCategory"></div>
-	<h3>Products</h3>
-	<table>
-		<tr>
-			<th>Name</th>
-			<th>Description</th>
-			<th colspan="2">More</th>
-		</tr>
-		<tr th:each="product : ${products}">
-			<td><a th:href="@{/shopuser/find/(id=${product.id})}"
-				th:text="${product.name}"></a></td>
-			<td>
-				<ul>
-					<li th:each="desc : ${product.description}" th:text="${desc}" />
-				</ul>
-			</td>
-			<td th:text="${product.price}" />
-			<td>
-				<form th:action="@{/shopuser/addtocart}" method="post"
-					th:object="${productModel}">
-					<input type="text" th:value="${product.id}" name="id"
-						hidden="hidden" /> <input type="text" th:value="${product.price}"
-						name="price" hidden="hidden" />
-					<input type="text"
-						th:value="${product.name}" name="name" hidden="hidden" />
-					<input
-						type="number" th:value="${product.amount}" name="amount"
-						hidden="hidden" />
-					<input type="number" th:field="*{quantity}"/>
-					<input type="submit"
-						value="Add to cart" />
-				</form>
-			</td>
-		</tr>
-	</table>
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+
+    <!-- Mobile Nav (max width 767px)-->
+    <div class="mobile-nav">
+        <!-- Navbar Brand -->
+        <div class="amado-navbar-brand">
+            <a href="index.html">AMAZING NOTEBOOKS</a>
+        </div>
+        <!-- Navbar Toggler -->
+        <div class="amado-navbar-toggler">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- Header Area Start -->
+    <header class="header-area clearfix">
+        <!-- Close Icon -->
+        <div class="nav-close">
+            <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+        <!-- Logo -->
+        <div class="logo">
+            <a href="index.html"><font size="6">AMAZING</font> <font size="4">NOTEBOOKS</font></a>
+        </div>
+        <!-- Amado Nav -->
+        <nav class="amado-nav">
+            <ul>
+                 <li class="active"><a th:href="@{/}">Home</a></li>
+            </ul>
+        </nav>
+        <!-- Cart Menu -->
+        <div class="cart-fav-search mb-100">
+             <div th:replace="shop/headerShop :: headerShop"><img src="img/core-img/cart.png" alt=""/><a th:href="@{/shopuser/cart}" th:text="${cart}"></a></div>
+        </div>
+    </header>
+    <!-- Header Area End -->
+
+    <div class="shop_sidebar_area">
+
+        <!-- ##### Single Widget ##### -->
+        <div class="widget catagory mb-50">
+            <!-- Widget Title -->
+            <h6 class="widget-title mb-30">Catagories</h6>
+
+            <!--  Catagories  -->
+            <div class="catagories-menu">
+                <ul>
+                    <li class="active"><a th:replace="shop/headerCategory :: headerCategory"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-left: 400px;margin-top: -400px;">
+    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+        <div class="single-product-wrapper">
+            <div class="product-img">
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    <tr th:each="product : ${products}">
+                        <td><a th:href="@{/shopuser/find/(id=${product.id})}"
+                               th:text="${product.name}"></a></td>
+                        <td>
+                            <ul>
+                                <li th:each="desc : ${product.description}" th:text="${desc}" />
+                            </ul>
+                        </td>
+                        <td th:text="${product.price}" />
+                        <td>
+                            <form th:action="@{/shopuser/addtocart}" method="post"
+                                  th:object="${productModel}">
+                                <input type="text" th:value="${product.id}" name="id"
+                                       hidden="hidden" /> <input type="text" th:value="${product.price}"
+                                                                 name="price" hidden="hidden" />
+                                <input type="text"
+                                       th:value="${product.name}" name="name" hidden="hidden" />
+                                <input
+                                        type="number" th:value="${product.amount}" name="amount"
+                                        hidden="hidden" />
+                                <input type="number" th:field="*{quantity}"/>
+                                <input type="submit"
+                                       value="Add to cart" />
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Footer Area End ##### -->
+
+<!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+<script th:attr="src=@{/vendor/js/jquery/jquery-2.2.4.min.js}"></script>
+<!-- Popper js -->
+<script th:attr="src=@{/vendorjs/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:attr="src=@{/vendor/js/bootstrap.min.js}"></script>
+<!-- Plugins js -->
+<script th:attr="src=@{/vendor/js/plugins.js}"></script>
+<!-- Active js -->
+<script th:attr="src=@{/vendor/js/active.js}"></script>
+
+
 </body>
+
 </html>
