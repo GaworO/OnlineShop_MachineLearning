@@ -7,12 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeConroller extends SessionedController {
 
-	@GetMapping({ "", "/home" })
+	@GetMapping({"/home" })
 	public String home(Model m) {
 		if (session().getAttribute("user") != null) {
 			m.addAttribute("msg", "zalogowano");
 		}
 		return "home";
+	}
+
+	@GetMapping({ ""})
+	public String welcomr() {
+		return "intro";
 	}
 
 }

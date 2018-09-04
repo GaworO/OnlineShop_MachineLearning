@@ -2,6 +2,10 @@ package pl.coderslab.controller;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +24,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import pl.coderslab.entity.Category;
 import pl.coderslab.entity.Order;
@@ -170,13 +175,17 @@ public class ShopUserController extends SessionedController {
 		category4 = userModel.getCart().getPriceCatgory4();
 
 
-		double[][] pointsArray = new double[][] {
-						new double[] { category0 , category1 , category2 , category3 , category4},
-						new double[] { category1 , category2 , category3 ,  category4, category0 },
-						new double[] { category2 , category3 , category4, category0,category1},
-						new double[] { category3 ,  category4, category0,category1 ,category2},
-						new double[] { category4, category0,category1 ,category2,category3},};
-
+		double[][] pointsArray = new double[][]{
+						new double[]{category0, category0},
+						new double[]{category0, category1},
+						new double[]{category1, category1},
+						new double[]{category1, category2},
+						new double[]{category2, category2},
+						new double[]{category2, category3},
+						new double[]{category3, category3},
+						new double[]{category3, category4},
+						new double[]{category4, category4},
+		};
 
 		RealMatrix realMatrix = MatrixUtils.createRealMatrix(pointsArray);
 		Covariance covariance = new Covariance(realMatrix);
@@ -184,10 +193,12 @@ public class ShopUserController extends SessionedController {
 		RealMatrix covarianceMatrix = covariance.getCovarianceMatrix();
 		EigenDecomposition ed = new EigenDecomposition(covarianceMatrix);
 
-		double deteminant = (double) ed.getDeterminant();
+		int deteminant = (int) ed.getDeterminant();
 		System.out.println("____________________________-");
-     System.out.println(deteminant);
-    double determinantRount = Math.round(deteminant);
+    System.out.println(deteminant);
+		BigDecimal roundOff = new BigDecimal(deteminant, MathContext.DECIMAL64);
+		System.out.println(roundOff);
+
 
 		sum = userModel.getCart().getSumPrice();
 		quantity = userModel.getCart().getQuantity();
@@ -227,7 +238,7 @@ public class ShopUserController extends SessionedController {
 		values1.add(category2);
 		values1.add(category3);
 		values1.add(category4);
-		values1.add(determinantRount);
+		values1.add(roundOff);
 
 
 		JSONArray values = new JSONArray();

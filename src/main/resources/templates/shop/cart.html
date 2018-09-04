@@ -40,14 +40,17 @@
     });
 </script>
 
-<h2>Your cart</h2>
-<button type="button" class="btn btn-warning"><a th:href="@{/shopuser/home}">Back </a></button>
-<div class="container">
-    <div class="row col-md-6 col-md-offset-2 custyle">
+<h2 style="margin-left: 550px;margin-top: 30px;">Your cart</h2>
+<button type="button" class="btn btn-warning btn-lg" style="margin-top: -60px;margin-left: 50px;"><a th:href="@{/shopuser/home}">Back</a></button>
+<div class="col-12 col-sm-6 col-md-12 col-xl-6">
+        <div class="single-product-wrapper">
+            <div class="product-img">
+                <div class="container">
+
 
 
         <form id="form" action="/shopuser/buy">
-            <table class="table table-striped custab">
+            <table class="table table-sm">
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
@@ -63,7 +66,7 @@
                                name="quantity"></input></td>
                     <td class="sum"></td>
                     <td><a th:href="@{/shopuser/remove/(id=${product.id})}" class="btn btn-danger btn-xs"><span
-                            class="glyphicon glyphicon-remove"></span>Remove</a></td>
+                            class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 <tr>
                     <td colspan="3">Sum all</td>
@@ -74,6 +77,10 @@
         </form>
     </div>
 </div>
+        </div>
+
+</div>
+
 
 </body>
 </html>
