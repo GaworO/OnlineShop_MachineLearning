@@ -1,64 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
-<title th:text="${product.name}"></title>
+    <meta charset="UTF-8"/>
+    <title th:text="${product.name}"></title>
 </head>
 <body>
-	<div th:replace="shop/header :: header"></div>
-	<p th:text="${msg}"></p>
-	<h2 th:text="${product.name}"></h2>
-	<div>
-		<label>Description</label>
-		<ul>
-			<li th:each="desc : ${description}" th:text="${desc}" />
-		</ul>
-	</div>
-	<div>
-		<table>
-			<tr>
-				<td>Evaluation:</td>
-				<td th:text="${product.evaluation}" />
-			</tr>
-			<tr>
-				<td>Price [PLN]:</td>
-				<td th:text="${product.price}" />
-			</tr>
-		</table>
-	</div>
-	<form th:action="@{/shopuser/addtocart}" method="post"
-		th:object="${productModel}">
-		<input type="text" th:value="${product.id}" name="id" hidden="hidden" />
-		<input type="text" th:value="${product.name}" name="name"
-			hidden="hidden" /> <input type="text" th:value="${product.price}"
-			name="price" hidden="hidden" />
-		<div>
-			<label for="quantity"></label><input type="number"
-				th:field="*{quantity}" />
-		</div>
-		<input type="submit" value="Dodaj do koszyka" />
-	</form>
-	<form action="/shopuser/addcomment">
-		<table th:fragment="comments">
-			<tr>
-				<th>Comment</th>
-				<th>Product</th>
-				<th>User</th>
-				<th>Evaluation</th>
-			</tr>
-			<tr th:each="comment : ${comments}">
-				<td th:text="${comment.content}" />
-				<td th:text="${comment.product.name}"></td>
-				<td th:text="${comment.user.username}" />
-				<td th:text="${comment.evaluation}" />
-			</tr>
+ <div class="single-product-wrapper">
+        <div class="product-img">
+            <div class="container">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th style="padding-left: 150px;">Quantity</th>
+                    </tr>
+                    <tr th:each="product : ${product}">
+                        <td class="td-actions text-right" th:text="${product.name}"></td>
+                        <td th:text="${product.price}"/>
+                        <td class="td-actions text-right"/>
+                            <form th:action="@{/shopuser/addtocart}" method="post"
+                                  th:object="${productModel}">
+                                <input type="text" th:value="${product.id}" name="id"
+                                       hidden="hidden"/> <input type="text" th:value="${product.price}"
+                                                                name="price" hidden="hidden"/>
+                                <input type="text"
+                                       th:value="${product.name}" name="name" hidden="hidden"/>
+                                <!--<input-->
+                                        <!--type="number" th:value="${product.amount}" name="amount"-->
+                                        <!--hidden="hidden"/>-->
+                                <input type="number" th:field="*{quantity}"/>
+                                <input type="submit" class="btn btn-info btn-sm"
+                                       value="Add to cart"/>
+                            </form>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
-			<tr>
-				<td colspan="4"><select name="productId" hidden="hidden"><option
-							th:value="${productId}" /></select><input type="submit"
-					value="Add comment" /></td>
-			</tr>
-		</table>
-	</form>
+
 </body>
 </html>

@@ -21,9 +21,6 @@ public class User implements Serializable{
 	private Long id;
 	@NotBlank(message = "Username may not be empty")
 	private String username;
-	@NotBlank(message = "Password may not be empty")
-	@Length(max=2000, message = "Password may not be longer than 2000 characters")
-	private String password;
 	@NotBlank(message = "Email may not be empty")
 	@Column(unique=true)
 	@Email
@@ -41,16 +38,6 @@ public class User implements Serializable{
 	}
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
-		this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-	}
-	public boolean isPasswordCorrect(String password) {
-		return BCrypt.checkpw(password, this.password);
 	}
 	public String getEmail() {
 		return email;

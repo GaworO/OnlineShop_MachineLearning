@@ -18,37 +18,28 @@ public class LoginController extends SessionedController {
 	@Autowired
 	UserRepository repoUser;
 
-	@GetMapping("/login")
-	public String login(Model m) {
-		return "login";
-	}
+//	@GetMapping("/login")
+//	public String login(Model m) {
+//		return "login";
+//	}
+//
+//	@PostMapping("login")
+//	public String loginPost(@RequestParam String email, @RequestParam String password, Model m) {
+//		UserModel uModel;
+//		if (session().getAttribute("userModel") != null) {
+//			uModel = (UserModel) session().getAttribute("userModel");
+//		} else {
+//			uModel = new UserModel();
+//			uModel.setCart(new Cart());
+//		}
+//		session().setAttribute("userModel", uModel);
+//		User u = this.repoUser.findByEmail(email);
+//		return "redirect:/shopuser/home";
+//	}
 
-	@PostMapping("login")
-	public String loginPost(@RequestParam String email, @RequestParam String password, Model m) {
-		UserModel uModel;
-		if (session().getAttribute("userModel") != null) {
-			uModel = (UserModel) session().getAttribute("userModel");
-		} else {
-			uModel = new UserModel();
-			uModel.setCart(new Cart());
-		}
-		session().setAttribute("userModel", uModel);
-		User u = this.repoUser.findByEmail(email);
-		if (u == null || !(u.isPasswordCorrect(password))) {
-			m.addAttribute("msg", "Invalid login data");
-			return "home";
-		} else {
-			session().setAttribute("user", u);
-			uModel.setUser(u);
-			session().setAttribute("userModel", uModel);
-			session().setAttribute("name", u.getUsername());
-		}
-		return "redirect:/shopuser/home";
-	}
-
-	@GetMapping("/logout")
-	public String logout() {
-		session().invalidate();
-		return "redirect:/shopuser/home";
-	}
+//	@GetMapping("/logout")
+//	public String logout() {
+//		session().invalidate();
+//		return "redirect:/shopuser/home";
+//	}
 }

@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import pl.coderslab.entity.Category;
 import pl.coderslab.entity.Product;
@@ -70,10 +68,9 @@ public class CategoryController {
 	@GetMapping("/products")
 	@Transactional
 	public String products(@RequestParam Long id, Model model) {
-		Category category = categoryRepository.findById(id);
-		Hibernate.initialize(category.getProducts());
-		List<Product> products = category.getProducts();
-		System.out.println(category.getProducts());
+		Category category1 = categoryRepository.findById(id);
+		Hibernate.initialize(category1.getProducts());
+		List<Product> products = category1.getProducts();
 		model.addAttribute("products", products);
 		return "productAll";
 	}

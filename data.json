@@ -1,1 +1,1 @@
-{"GlobalParameters":{},"Inputs":{"input1":{"ColumnNames":["mean","categ_0","categ_1","categ_2","categ_3","categ_4","cluster"],"Values":[[58.4,112.0,120.0,280.0,72.0,60.0,4.544650E+7]]}}}
+{"GlobalParameters":{},"Inputs":{"input1":{"ColumnNames":["mean","categ_0","categ_1","categ_2","categ_3","categ_4","cluster"],"Values":[[3.727272727272727,3.0,20.0,9.0,9.0,12.0,1078]]}}}

@@ -48,13 +48,11 @@ public class RegisterController extends SessionedController{
 			model.addAttribute("msg", "Email " + user.getEmail() + " is already registered");
 			return "home";
 		}
-		System.out.println(user.getPassword());
-		this.repoUser.save(user);
-		System.out.println(user.getPassword());
+//		this.repoUser.save(user);
 		uModel.setUser(user);
 		session().setAttribute("user", user);
 		session().setAttribute("name", user.getUsername());
-		return "redirect:/shopuser/home";
+		return "redirect:/home";
 	}
 
 }

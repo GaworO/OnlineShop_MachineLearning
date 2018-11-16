@@ -10,7 +10,8 @@
 
     <!-- Title  -->
     <title>Amazing Notebooks| Shop</title>
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet" id="bootstrap-css"/>
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet"
+          id="bootstrap-css"/>
     <script th:attr="src=@{//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
     <script th:attr="src=@{//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js}"></script>
     <!-- Core Style CSS -->
@@ -58,59 +59,45 @@
                     th:href="@{/shopuser/cart}" th:text="${cart}"></a></div>
         </div>
     </header>
-    <!-- Header Area End -->
-
-    <div class="shop_sidebar_area">
-
-        <!-- ##### Single Widget ##### -->
-        <div class="widget catagory mb-50">
-            <!-- Widget Title -->
-            <h6 class="widget-title mb-30">Catagories</h6>
-
-            <!--  Catagories  -->
-            <div class="catagories-menu">
-                <ul>
-                    <li class="active"><a th:replace="shop/headerCategory :: headerCategory"></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row" style="margin-left: 550px;margin-top: -500px;">
-    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-        <div class="single-product-wrapper">
-            <div class="product-img">
-                <div class="container">
-                    <table class="table table-sm">
-                        <tr>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th style="padding-left: 150px;">Quantity</th>
-                        </tr>
-                        <tr th:each="product : ${products}">
-                            <td class="td-actions text-right" ><a th:href="@{/shopuser/find/(id=${product.id})}"
-                                   th:text="${product.name}"></a></td>
-                            <td th:text="${product.price}"/>
-                            <td class="td-actions text-right">
-                                <form th:action="@{/shopuser/addtocart}" method="post"
-                                      th:object="${productModel}">
-                                    <input type="text" th:value="${product.id}" name="id"
-                                           hidden="hidden"/> <input type="text" th:value="${product.price}"
-                                                                    name="price" hidden="hidden"/>
-                                    <input type="text"
-                                           th:value="${product.name}" name="name" hidden="hidden"/>
-                                    <input
-                                            type="number" th:value="${product.amount}" name="amount"
-                                            hidden="hidden"/>
-                                    <input type="number" th:field="*{quantity}"/>
-                                    <input type="submit"  class="btn btn-info btn-sm"
-                                           value="Add to cart"/>
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+    <div class="single-product-wrapper">
+        <div class="product-img">
+            <div class="container">
+                <table class="table table-sm">
+                    <!--<tr>-->
+                        <!--<th>Category</th>-->
+                        <!--<th>Name</th>-->
+                        <!--<th>Price</th>-->
+                        <!--<th style="padding-left: 150px;">Quantity</th>-->
+                    <!--</tr>-->
+                    <td th:each="category : ${avaiableCategories}">
+                            <td><a th:href="@{/shopuser/find/(id=${category.id})}"
+                               th:text="${category.name}"></a></td>
+                      </td>
+                       <!--<tr th:each="product : ${products}">-->
+                        <!--<td class="td-actions text-right"><a th:href="@{/shopuser/find/(id=${product.id})}"-->
+                                                             <!--th:text="${product.name}"></a></td>-->
+                        <!--<td th:text="${product.price}"/>-->
+                        <!--<td class="td-actions text-right">-->
+                            <!--<form th:action="@{/shopuser/addtocart}" method="post"-->
+                                  <!--th:object="${productModel}">-->
+                                <!--<input type="text" th:value="${product.id}" name="id"-->
+                                       <!--hidden="hidden"/> <input type="text" th:value="${product.price}"-->
+                                                                <!--name="price" hidden="hidden"/>-->
+                                <!--<input type="text"-->
+                                       <!--th:value="${product.name}" name="name" hidden="hidden"/>-->
+                                <!--<input-->
+                                        <!--type="number" th:value="${product.amount}" name="amount"-->
+                                        <!--hidden="hidden"/>-->
+                                <!--<input type="number" th:field="*{quantity}"/>-->
+                                <!--<input type="submit" class="btn btn-info btn-sm"-->
+                                       <!--value="Add to cart"/>-->
+                            <!--</form>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                </table>
             </div>
         </div>
     </div>

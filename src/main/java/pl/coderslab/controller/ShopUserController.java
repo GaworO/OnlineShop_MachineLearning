@@ -138,6 +138,7 @@ public class ShopUserController extends SessionedController {
 		return "productFind";
 	}
 
+
 	@PostMapping("/addtocart")
 	public String addToCart(@ModelAttribute ProductModel productModel, Model model) {
 		UserModel userModel = new UserModel();
@@ -299,7 +300,7 @@ public class ShopUserController extends SessionedController {
 			UserModel userModel = (UserModel) session().getAttribute("userModel");
 			session().setAttribute("userModelToRegister", userModel);
 			model.addAttribute("msg", "You must be logged in to buy");
-			return "home";
+			return "end";
 		}
 	}
 
@@ -341,6 +342,12 @@ public class ShopUserController extends SessionedController {
 	@ModelAttribute("avaiableCategories")
 	public List<Category> availableCategories(){
 		return categoryRepository.findAll();
+	}
+
+	@GetMapping("/products")
+	@ModelAttribute("categoryForProduct")
+	public String categoryForProduct(@RequestParam Long id , Model model) {
+		return categoryRepository.findById(id).getName();
 	}
 
 	@GetMapping("login")

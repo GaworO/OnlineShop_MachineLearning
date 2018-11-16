@@ -16,7 +16,7 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" th:href="@{/vendor/css/core-style.css}"/>
-    <link rel="stylesheet" th:href="@{/vendor/style.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/vendor/style.css}"/>-->
 
 
 </head>
@@ -65,16 +65,11 @@
                         <div class="col-12 col-lg-6 col-xl-9">
                             <div class="line"></div>
 
-                            <p>I am a beginner developer interested in professional development as Junior Java
-                                Developer. I gained my professional experience in programming and databases while
-                                working for one of London start-up companies - Smartzer . In 2017 I completed a 280-hour
-                                back-end course at the CodersLab Programming School in Warsaw and then I started to work
-                                for outsorcing company called Novaris. At present, I want to use these skills and
-                                knowledge to further develop as a Java programmer and to extend my knowledge during the
-                                Informatics and Econometric studies at Warsaw University. </p>
+                            <p>I am a developer interested in professional development as Java and Machine Learning developer. In 2017 I completed a 280-hour back-end course at the CodersLab Programming School in Warsaw. I gained my professional experience in companies located in Warsaw , London and Germany. Currently I am also extending my knowledge during the Informatics and Econometric studies at University of Warsaw .
+                            </p>
                         </div>
                         <!-- Newsletter Form -->
-                        <div class="col-12 col-lg-6 col-xl-9">
+                        <div cclass="col-12 col-lg-6 col-xl-7">
                             <div class="profile">
                                 <img th:attr="src=@{/vendor/img/bg-img/alex.jpg}" alt=""/>
                             </div>
@@ -99,8 +94,8 @@
             <div class="col-12 col-lg-6 col-xl-7">
                 <div class="newsletter-text mb-100">
                     <h2>The <span>Aim</span></h2>
-                    <p>Nulla ac convallis lorem, eget euismod nisl. Donec in libero sit amet mi vulputate consectetur.
-                        Donec auctor interdum purus, ac finibus massa bibendum nec.</p>
+                    <p>Aim of this experiment is to classify users into groups of customers with the usage of
+                     supervised and unsupervised algorithms. </p>
                 </div>
             </div>
 
@@ -112,8 +107,8 @@
     <div class="container">
         <div class="row-intro">
             <!-- Newsletter Text -->
-            <div class="col-12 col-lg-6 col-xl-7">
-                <div class="works">
+            <div class="col-12 col-lg-6 col-xl-7" style="margin-top: 400px;">
+                <div class="works" >
                     <h2>Steps <span>to proceed</span></h2>
                     <p>Nulla ac convallis lorem, eget euismod nisl. Donec in libero sit amet mi vulputate consectetur.
                         Donec auctor interdum purus, ac finibus massa bibendum nec.Lorem ipsum dolor sit amet,
@@ -129,9 +124,7 @@
         </div>
     </div>
 </section>
-
-<button type="button" class="btn btn-warning btn-block"><a th:href="@{/home}">Begin</a></button>
-
+<a th:href="@{/register}"><button type="button" class="btn btn-warning btn-block">Begin</button></a>
 
 <!-- ##### Footer Area Start ##### -->
 <footer class="footer_area_intro clearfix">
